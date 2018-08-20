@@ -1,0 +1,29 @@
+extends layout
+block content
+    - console.log('hello from details')
+    +nav("Produktkatalog")
+    .jumbotron
+        .container
+            h2.display-4 Detaljer
+    +button('info', 'button', 'small', undefined, '/') Tillbaka
+    .container
+        .row
+            .col-sm-5
+                form(action="", method="")
+                    input(type="hidden", name='id', value='')
+                    each val, key in data
+                            //- TODO proper date identifier
+                            - if (Object.prototype.toString.call(val) === '[object Date]') {
+                                label(for="date") #{key}
+                                .input-group.date
+                                    input#date.form-control(type="text", name="date", placeholder=val, disabled)
+                                    span.input-group-addon
+                                        span.fas.fa-calendar
+                            - } else {
+                                label(for="input") #{key}
+                                div.form-group
+                                    input#input.form-control(type="text", value='', placeholder=val, disabled) 
+                            - }
+            .col-sm-7
+                div#image
+                    img.rounded.float-left(src="https://static1.squarespace.com/static/52b6128ce4b067a0f5987a3a/t/531e0c0de4b089910ebb2224/1394478094498/Product_icon.png", alt="", srcset="", style="width: 50%; height: 50%; position: relative; left: 50%;")      

@@ -1,0 +1,27 @@
+extends layout
+block content
+    +nav("Produktkatalog", "menu")
+    .jumbotron
+        .container
+            .row
+                div.col-sm-5
+                    h1.display-3 Välkommen!
+                    br 
+                p Här listas alla objekt som är tillgängliga just nu. Du kan editera, radera, lägga till nya objekt eller bara titta närmare på dem.
+    br
+    .container-fluid
+        .row
+            div.col-lg-2.col-md-4
+                +button('primary', 'button', 'small', undefined, '/add') Lägg till ny  
+                    span.fas.fa-plus 
+            div.col-lg-4.col-md-4.col-sm-4.pull-center.well
+                form#search-prods.form-inline(action="", method="")  
+                    select#column-filter.form-control.select-picker
+                        option(selected) Välj kolumn...
+                        div.dropdown-divider
+                        each col, i in columns
+                            option(value=i) #{col}
+                    div.input-group.custom-search-form
+                        input#search-input.form-control.py-2(type="text", placeholder="Sök", onkeyup='filterTable()')
+    br
+    +table("striped", columns, data, idCol)    

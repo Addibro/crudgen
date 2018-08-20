@@ -1,0 +1,28 @@
+/* * {
+    border: #343a40 0.09px solid;
+} */
+
+body .navbar{
+    background-color:lightgray;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;  
+    margin: 0;
+}
+
+.jumbotron p {
+    font-size: 16px;
+}
+
+.btn {
+    margin: 1%;
+}
+
+footer {
+    background: #343a40;
+    color: white;
+    padding: 20px;
+    font-size: 16px;
+    position: relative;
+    bottom: 0px;
+}

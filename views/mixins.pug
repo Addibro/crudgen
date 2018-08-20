@@ -1,0 +1,83 @@
+//- Navbar mixins
+mixin nav(name, id, style)
+    - var style = (typeof style === 'undefined') ? "default" : style
+    nav.navbar.navbar-expand-md(role="navigation")
+        .navbar-brand(href="#")= name
+        
+           
+mixin nav_item(href, active)
+    li(class=active): a( href=href )
+        block
+ 
+mixin nav_item_dropdown(href, active)
+    li(class=["dropdown", active])
+        a.dropdown-toggle( href=href, data-toggle="dropdown", role="button", aria-expanded="false" )= attributes.label
+            span.caret
+        ul.dropdown-menu( role="menu" )
+            block
+ 
+mixin nav_divider
+    li.divider
+ 
+mixin nav_header
+    li.dropdown-header
+        block
+
+mixin search
+    nav.navbar.navbar-light.bg-light
+        form.form-inline(action="#")
+            input.form-control.mr-sm-2(type="search", placehoder="Sök", aria-label="Sök")
+            +button("success") Sök
+
+mixin panel(heading, style)
+    - var style = (typeof style === 'undefined') ? 'default' : style
+    div(class=["panel", "panel-" + style])
+        .panel-heading= heading
+        .panel-body
+            block
+
+mixin table(style, columns, data, idCol)
+    - var style = (typeof style === 'undefined') ? 'hover' : style
+    - var columns = (typeof columns === 'undefined') ? {"col1": "hello", "col2": "artname", "col3": "price", "col4": "category", "col5": "amount", "col6": "val", "col7": "shipdate"} : columns
+    - var data = (typeof data === 'undefined') ? [{"col1": '2337', "col2": 'Bitch', "col3": 123, "col4": "snot", "col5": 10, "col6": "value", "col7": "19-09-2018"}] : data
+    div.col-12.shadow-sm.p-3.mb-5.bg-white.rounded
+        div.table-responsive
+            table#table.table(class= 'table-' + style)
+                if data.length
+                    thead
+                        tr
+                            th(scope='col') Handling
+                            each col in columns
+                                th(scope='col') #{col}
+                    tbody
+                        each d, i in data
+                            //- whatever column chosen to be the identifier for the db
+                            - var id = Object.values(d)[idCol];
+                            tr
+                                th(scope='col') 
+                                    div.btn-group(role="group")
+                                        +button('info', 'submit', 'small', undefined, '/details/'+ id) Detaljer
+                                        +button('success', 'submit', 'small', undefined, '/edit/' + id) Ändra
+                                        +button('danger', 'submit', 'small', undefined, '/delete/' + id) Ta bort
+                                each prod, i in d
+                                    td #{prod}
+                else
+                    div.col-12
+                        .container
+                            div.alert.alert-warning No data!
+
+mixin button(style, type, size, icon, href)
+    - var style = (typeof style === 'undefined') ? 'light' : style
+    - var type = (typeof type === 'undefined') ? 'button' : type
+    - var href = (typeof href === 'undefined') ? '#' : href
+    - var icon = (typeof icon === 'undefined') ? '' : icon
+    case size
+        when 'large'
+            - size = 'btn-lg'
+        when 'small'
+            - size = 'btn-sm'
+        when 'mini'
+            - size = 'btn-xs'
+        
+    a.btn(class=["btn-"+style, size], role="button", href=href)
+        block
